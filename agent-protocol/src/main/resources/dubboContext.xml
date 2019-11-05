@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+	<context:property-placeholder system-properties-mode="OVERRIDE" file-encoding="UTF-8" />
+
+	<!-- 增加AOP配置 动态监听注册 -->
+	<bean id="mspAgentAspect" class="com.ab.msp.agent.instrumentation.MspAgentInstrumentation">
+		<property name="exporter">
+			<bean class="com.ab.msp.agent.protocol.dubbo.DubboServiceExporter" />
+		</property>
+	</bean>
+	<!-- 提供方应用信息，用于计算依赖关系 -->
+	<dubbo:application name="agentProvider" />
+
+	<!-- 使用multicast广播注册中心暴露服务地址 <dubbo:registry address="multicast://224.5.6.7:1234" /> -->
+	<!-- 使用zookeeper注册中心暴露服务地址 <dubbo:registry address="zookeeper://10.10.101.37:2181" /> -->
+	<dubbo:registry protocol="zookeeper" address="${DUBBO_ZOOKEEPER_LOCATION}" />
+	<!-- <dubbo:registry protocol="zookeeper" address="${127.0.0.1:2181}" /> -->
+
+	<!-- 用dubbo协议在20880端口暴露服务-->
+	<dubbo:protocol name="dubbo" port="${DUBBO_PROTOCOL_PORT}"/>
+	<!-- <dubbo:protocol name="dubbo" port="20880"/> -->
+	
+    <dubbo:provider timeout="${DUBBO_PROVIDER_TIMEOUT}"/>
+    <!-- <dubbo:provider timeout="120000"/> -->
+</beans>

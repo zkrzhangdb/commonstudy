@@ -1,0 +1,8 @@
+#instrumentation.yaml
+
+clientCallMethodType: axis1
+transferTo: dubbo
+registryAddress: zookeeper
+#instrumentationList:
+#  - com.dayf.yaml.className.getname
+#  - com.dayf.yaml.className.getname2

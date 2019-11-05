@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE aspectj PUBLIC "-//AspectJ//DTD//EN" "http://www.eclipse.org/aspectj/dtd/aspectj.dtd">
+<aspectj>
+    <!--定义被植入的路径  -->
+    <weaver>
+       <include within="org.apache.axis..*"/>
+       <include within="org.codehaus.xfire..*"/>
+       <include within="org.apache.cxf..*"/>
+    </weaver>
+    
+    <aspects>
+       <aspect name="com.ab.msp.agent.aspect.MspAgentAspect"/>
+       <aspect name="com.ab.msp.agent.aspect.MspAgentAspectXfire"/>
+       <aspect name="com.ab.msp.agent.aspect.MspAgentAspectCXF"/>
+    </aspects>
+</aspectj>

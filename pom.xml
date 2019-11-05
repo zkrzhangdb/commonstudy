@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <!--pom项目信息-->
+    <groupId>com.ab.msp.agent</groupId>
+    <artifactId>agent</artifactId>
+    <packaging>pom</packaging>
+    <version>1.0-SNAPSHOT</version>
+    <!--子模块-->
+    <modules>
+        <module>agent-main</module>
+        <module>agent-protocol</module>
+        <module>agent-execution</module>
+        <module>agent-application</module>
+        <module>agent-domain</module>
+        <module>agent-adapter</module>
+    </modules>
+    <!--属性定义-->
+    <properties>
+        <jdk.version>1.6</jdk.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <javassist.version>3.21.0-GA</javassist.version>
+        <slf4j.version>1.6.1</slf4j.version>
+        <aspectj.version>1.8.7</aspectj.version>
+        <springframework.version>4.3.10.RELEASE</springframework.version>
+        <snakeyamlVersion>1.17</snakeyamlVersion>
+        <rxjavaVersion>1.0.10</rxjavaVersion>
+    </properties>
+    <!--依赖-->
+    <dependencies>
+        <dependency>
+            <groupId>org.javassist</groupId>
+            <artifactId>javassist</artifactId>
+            <version>${javassist.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.reactivex</groupId>
+            <artifactId>rxjava</artifactId>
+            <version>${rxjavaVersion}</version>
+        </dependency>
+    </dependencies>
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>3.1</version>
+                    <configuration>
+                        <source>${jdk.version}</source>
+                        <target>${jdk.version}</target>
+                        <encoding>${project.build.sourceEncoding}</encoding>
+                    </configuration>
+                </plugin>
+                <!-- 解决Maven插件在Eclipse内执行了一系列的生命周期引起冲突 -->
+                <plugin>
+                    <groupId>org.eclipse.m2e</groupId>
+                    <artifactId>lifecycle-mapping</artifactId>
+                    <version>1.0.0</version>
+                    <configuration>
+                        <lifecycleMappingMetadata>
+                            <pluginExecutions>
+                                <pluginExecution>
+                                    <pluginExecutionFilter>
+                                        <groupId>org.apache.maven.plugins</groupId>
+                                        <artifactId>maven-dependency-plugin</artifactId>
+                                        <versionRange>3.0.2</versionRange>
+                                        <goals>
+                                            <goal>copy</goal>
+                                        </goals>
+                                    </pluginExecutionFilter>
+                                    <action>
+                                        <ignore/>
+                                    </action>
+                                </pluginExecution>
+                            </pluginExecutions>
+                        </lifecycleMappingMetadata>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+
+
+</project>
